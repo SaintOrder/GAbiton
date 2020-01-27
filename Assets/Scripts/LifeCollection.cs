@@ -4,6 +4,13 @@ public class LifeCollection : MonoBehaviour
 {
     private GameObject Oldbattery;
     public GameObject SolutiontoUnload;
+    private DieSpace _dieSpace;
+
+    private void Start()
+    {
+        _dieSpace = GameObject.Find("DieSpace").GetComponent<DieSpace>();
+    }
+
     private void Update()
     {
         Destroy(Oldbattery);
@@ -12,7 +19,7 @@ public class LifeCollection : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            DieSpace.lives += 1;
+            _dieSpace.lives += 1;
             Oldbattery.transform.position = SolutiontoUnload.transform.position;
             
         }

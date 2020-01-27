@@ -6,13 +6,13 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField]
     private int JumpPower = 10;
-
+    
     [SerializeField]
     private float MoveSpeed = 10f;
 
     private Rigidbody2D _rb;
     private Vector2 _input;
-
+    private bool faceRight = true;
     private BoxCollider2D _groundCheckCollider;
     private GroundCheck _groundCheck;
 
@@ -26,9 +26,24 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         _input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-    }
 
-    private void FixedUpdate()
+        if (_input.x > 0 && !faceRight)
+        {
+            flip();
+        }
+
+        else if (_input.x < 0 && faceRight)
+        {
+            flip();
+        }
+    }
+    void flip()
+    {
+        faceRight = !faceRight;
+        transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
+    }
+  
+private void FixedUpdate()
     {
         bool isGrounded = _groundCheck.isGrounded;
         if(_input.x != 0f && isGrounded)

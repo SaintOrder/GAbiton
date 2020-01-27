@@ -4,19 +4,24 @@ using UnityEngine;
 
 public class KeepScore : MonoBehaviour
 {
-    public static int Score = DieSpace.lives;
+    private DieSpace _dieSpace;
+    private PlayerMovement _movement;
+    private Animator _gameOverAnimator;
 
-
-    void Update()
+    private void Start()
     {
-        Score = DieSpace.lives;
-        if( Score == -1)
-        {
+        _movement = GameObject.Find("player").GetComponent<PlayerMovement>();
+        _gameOverAnimator = GameObject.Find("GAMEOVER").GetComponent<Animator>();
+        _dieSpace = GameObject.Find("DieSpace").GetComponent<DieSpace>();
+    }
 
-        }
+    public void Died()
+    {
+        _movement.enabled = false;
+        _gameOverAnimator.SetBool("isDead", true);  
     }
       void OnGUI()
     {
-        GUI.Box(new Rect(100, 50, 50, 20), Score.ToString());
+        GUI.Box(new Rect(100, 50, 50, 20), _dieSpace.lives.ToString());
     }
 }
